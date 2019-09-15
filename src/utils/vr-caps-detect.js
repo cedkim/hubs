@@ -49,7 +49,7 @@ export async function getAvailableVREntryTypes() {
 
   // This needs to be kept up-to-date with the latest browsers that can support VR and Hubs.
   // Checking for navigator.getVRDisplays always passes b/c of polyfill.
-  const isWebVRCapableBrowser = window.hasNativeWebVRImplementation;
+  const isWebVRCapableBrowser = navigator.getVRDisplays;
 
   const isDaydreamCapableBrowser = !!(isWebVRCapableBrowser && browser.name === "chrome" && !isSamsungBrowser);
   const isIDevice = AFRAME.utils.device.isIOS();
@@ -62,7 +62,7 @@ export async function getAvailableVREntryTypes() {
       : VR_DEVICE_AVAILABILITY.maybe
     : VR_DEVICE_AVAILABILITY.no;
 
-  const isCardboardCapableBrowser = !!(isMobile && !isIDevice && browser.name === "chrome" && !isSamsungBrowser);
+  const isCardboardCapableBrowser = !!(isMobile && !isIDevice && !isSamsungBrowser);
 
   let displays = [];
   try {
